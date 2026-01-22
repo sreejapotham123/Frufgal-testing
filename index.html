@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 520px;
+      width: 100%;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #2d3748;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #718096;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 16px 0 8px;
+      color: #2d3748;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+      background: #f7fafc;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    input::placeholder {
+      color: #a0aec0;
+    }
+
+    input:hover, select:hover {
+      border-color: #cbd5e0;
+      background: #f9fafb;
+    }
+
+    input:focus, select:focus {
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .row {
+      display: flex;
+      gap: 14px;
+    }
+    .row > div {
+      flex: 1;
+    }
+
+    .error {
+      color: #e53e3e;
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+      font-weight: 500;
+      animation: slideDown 0.2s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-msg {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #d4fc79 0%, #96f97b 100%);
+      color: #22543d;
+      display: none;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      animation: slideUp 0.3s ease-out;
+      border-left: 4px solid #38a169;
+    }
+
+    .strength {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .strength.weak { color: #e53e3e; }
+    .strength.medium { color: #ed8936; }
+    .strength.strong { color: #38a169; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px;
+      background: #f7fafc;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-row:hover {
+      background: #edf2f7;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+
+    label[for="terms"] {
+      margin: 0;
+      cursor: pointer;
+      color: #4a5568;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transition: left 0.3s ease;
+    }
+
+    button:not(:disabled):hover:before {
+      left: 100%;
+    }
+
+    button:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    button:not(:disabled) {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    button:not(:disabled):active {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Register Account</h2>
+    <div class="subtitle">Join our community and get started today</div>
+
+    <form id="regForm" novalidate>
+      <div class="row">
+        <div>
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" placeholder="Enter first name" />
+          <div class="error" id="firstNameErr">First name is required (min 2 characters).</div>
+        </div>
+        <div>
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" placeholder="Enter last name" />
+          <div class="error" id="lastNameErr">Last name is required (min 1 character).</div>
+        </div>
+      </div>
+
+      <label for="email">Email *</label>
+      <input type="email" id="email" placeholder="example@gmail.com" />
+      <div class="error" id="emailErr">Enter a valid email address.</div>
+
+      <label for="phone">Phone *</label>
+      <input type="tel" id="phone" placeholder="10-digit mobile number" />
+      <div class="error" id="phoneErr">Enter a valid 10-digit phone number.</div>
+
+      <label>Gender *</label>
+      <select id="gender">
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <div class="error" id="genderErr">Gender is required.</div>
+
+      <label for="country">Country *</label>
+      <select id="country">
+        <option value="">Select Country</option>
+      </select>
+      <div class="error" id="countryErr">Country is required.</div>
+
+      <div class="row">
+        <div>
+          <label for="state">State *</label>
+          <select id="state" disabled>
+            <option value="">Select State</option>
+          </select>
+          <div class="error" id="stateErr">State is required.</div>
+        </div>
+
+        <div>
+          <label for="city">City *</label>
+          <select id="city" disabled>
+            <option value="">Select City</option>
+          </select>
+          <div class="error" id="cityErr">City is required.</div>
+        </div>
+      </div>
+
+      <label for="password">Password *</label>
+      <input type="password" id="password" placeholder="Enter password" />
+      <div class="error" id="passwordErr">
+        Password must be at least 8 chars and include uppercase, lowercase, number & special char.
+      </div>
+      <div class="strength" id="strengthText"></div>
+
+      <label for="confirmPassword">Confirm Password *</label>
+      <input type="password" id="confirmPassword" placeholder="Re-enter password" />
+      <div class="error" id="confirmPasswordErr">Passwords do not match.</div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="terms" />
+        <label for="terms" style="margin:0; font-weight:600;">I agree to Terms & Conditions *</label>
+      </div>
+      <div class="error" id="termsErr">You must accept terms and conditions.</div>
+
+      <button id="submitBtn" type="submit" disabled>Register</button>
+
+      <div class="success-msg" id="successMsg">
+        ✅ Registration Successful! Form has been reset.
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Country-State-City Data
+    const data = {
+      "India": {
+        "Andhra Pradesh": ["Vijayawada", "Guntur", "Tirupati"],
+        "Telangana": ["Hyderabad", "Warangal", "Nizamabad"],
+        "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"]
+      },
+      "USA": {
+        "California": ["Los Angeles", "San Diego", "San Francisco"],
+        "Texas": ["Houston", "Dallas", "Austin"]
+      }
+    };
+
+    const form = document.getElementById("regForm");
+
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+    const gender = document.getElementById("gender");
+
+    const country = document.getElementById("country");
+    const state = document.getElementById("state");
+    const city = document.getElementById("city");
+
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const terms = document.getElementById("terms");
+
+    const submitBtn = document.getElementById("submitBtn");
+    const successMsg = document.getElementById("successMsg");
+    const strengthText = document.getElementById("strengthText");
+
+    // Error elements
+    const err = (id) => document.getElementById(id);
+
+    // Populate countries
+    Object.keys(data).forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      country.appendChild(opt);
+    });
+
+    // Dropdown change logic
+    country.addEventListener("change", () => {
+      state.innerHTML = `<option value="">Select State</option>`;
+      city.innerHTML = `<option value="">Select City</option>`;
+      city.disabled = true;
+
+      if (country.value) {
+        state.disabled = false;
+        Object.keys(data[country.value]).forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s;
+          opt.textContent = s;
+          state.appendChild(opt);
+        });
+      } else {
+        state.disabled = true;
+      }
+      validateAll();
+    });
+
+    state.addEventListener("change", () => {
+      city.innerHTML = `<option value="">Select City</option>`;
+      if (state.value) {
+        city.disabled = false;
+        data[country.value][state.value].forEach(ct => {
+          const opt = document.createElement("option");
+          opt.value = ct;
+          opt.textContent = ct;
+          city.appendChild(opt);
+        });
+      } else {
+        city.disabled = true;
+      }
+      validateAll();
+    });
+
+    city.addEventListener("change", validateAll);
+
+    // Validators
+    const validName = (v, minLen=1) => v.trim().length >= minLen;
+    const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+    const validPhone = (v) => /^\d{10}$/.test(v.trim());
+
+    const strongPassword = (v) => {
+      // at least 8, uppercase, lowercase, number, special
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._#^()-+=])[A-Za-z\d@$!%*?&._#^()-+=]{8,}$/.test(v);
+    };
+
+    const passwordStrength = (v) => {
+      let score = 0;
+      if (v.length >= 8) score++;
+      if (/[a-z]/.test(v)) score++;
+      if (/[A-Z]/.test(v)) score++;
+      if (/\d/.test(v)) score++;
+      if (/[@$!%*?&._#^()-+=]/.test(v)) score++;
+
+      if (v.length === 0) return { label: "", cls: "" };
+      if (score <= 2) return { label: "Weak", cls: "weak" };
+      if (score === 3 || score === 4) return { label: "Medium", cls: "medium" };
+      return { label: "Strong", cls: "strong" };
+    };
+
+    function showError(el, errorId, condition) {
+      if (condition) {
+        err(errorId).style.display = "block";
+        el.style.borderColor = "#d93025";
+        return false;
+      } else {
+        err(errorId).style.display = "none";
+        el.style.borderColor = "#cfd2d8";
+        return true;
+      }
+    }
+
+    function updateStrengthUI() {
+      const st = passwordStrength(password.value);
+      strengthText.textContent = st.label ? `Password Strength: ${st.label}` : "";
+      strengthText.className = `strength ${st.cls}`;
+    }
+
+    function validateAll() {
+      updateStrengthUI();
+
+      const v1 = showError(firstName, "firstNameErr", !validName(firstName.value, 2));
+      const v2 = showError(lastName, "lastNameErr", !validName(lastName.value, 1));
+      const v3 = showError(email, "emailErr", !validEmail(email.value));
+      const v4 = showError(phone, "phoneErr", !validPhone(phone.value));
+      const v5 = showError(gender, "genderErr", gender.value === "");
+
+      const v6 = showError(country, "countryErr", country.value === "");
+      const v7 = showError(state, "stateErr", state.value === "");
+      const v8 = showError(city, "cityErr", city.value === "");
+
+      const v9 = showError(password, "passwordErr", !strongPassword(password.value));
+      const v10 = showError(confirmPassword, "confirmPasswordErr",
+        confirmPassword.value === "" || confirmPassword.value !== password.value
+      );
+
+      const v11 = showError(terms, "termsErr", !terms.checked);
+
+      const allValid = v1 && v2 && v3 && v4 && v5 && v6 && v7 && v8 && v9 && v10 && v11;
+      submitBtn.disabled = !allValid;
+      return allValid;
+    }
+
+    // Live validation
+    [firstName, lastName, email, phone, gender, password, confirmPassword, terms].forEach(el => {
+      el.addEventListener("input", validateAll);
+      el.addEventListener("change", validateAll);
+      el.addEventListener("blur", validateAll);
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      successMsg.style.display = "none";
+
+      if (validateAll()) {
+        successMsg.style.display = "block";
+        form.reset();
+
+        // reset dropdown states
+        state.disabled = true;
+        city.disabled = true;
+        state.innerHTML = `<option value="">Select State</option>`;
+        city.innerHTML = `<option value="">Select City</option>`;
+        strengthText.textContent = "";
+        strengthText.className = "strength";
+        submitBtn.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
